@@ -18,14 +18,11 @@ cd vue-admin-template
 # 安装依赖
 npm install
 
-# 建议不要直接使用 cnpm 安装以来，会有各种诡异的 bug。可以通过如下操作解决 npm 下载速度慢的问题
-npm install --registry=https://registry.npm.taobao.org
-
 # 启动服务
 npm run dev
 ```
 
-浏览器访问 [http://localhost:9528](http://localhost:9528)
+浏览器访问 [http://localhost:80](http://localhost:80)
 
 ## 发布
 
@@ -52,3 +49,20 @@ npm run lint
 # 代码格式检查并自动修复
 npm run lint -- --fix
 ```
+
+# 前端开发遇到的问题
+
+## 访问后端接口
+
+### 登录
+1. 更改api/user中登录的路径
+2. vue.config.js中注释第41行左右```before: require('./mock/mock-server.js')```
+3. 更改.env.development中的```VUE_APP_BASE_API```
+
+### 跨域问题
+- 问题：```No 'Access-Control-Allow-Origin'```
+- 产生：
+	1. 访问协议 http https
+	2. IP地址 192.168.1.1 193.168.1.2
+	3. 端口号 80 8080
+- 解决：后端直接在controller上加```@CrossOrigin()```注解

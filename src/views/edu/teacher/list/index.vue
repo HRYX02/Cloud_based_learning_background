@@ -68,7 +68,7 @@
 </template>
 
 <script>
-import teacher from '@/api/teacher/teacher';
+import teacher from '@/api/edu/teacher/teacher';
 export default {
 	name: 'List',
 	data() {

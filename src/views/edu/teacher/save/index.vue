@@ -46,8 +46,15 @@ export default {
 			saveBtnDisabled: false  // 保存按钮是否禁用,
 		}
 	},
+	// 页面渲染之前执行
 	created() {
 		this.init()
+	},
+
+	watch: {  //监听
+		$route(to, from) { //路由变化方式，路由发生变化，方法就会执行
+			this.init()
+		}
 	},
 
 	methods: {
@@ -123,7 +130,7 @@ export default {
 		 * @description 修改讲师
 		 * @author SxxStar
 		 */
-		 updateTeacher() {
+		updateTeacher() {
 			teacherApi.updateTeacher(this.teacher)
 				// 修改成功
 				.then(response => {

@@ -46,14 +46,41 @@ export default {
 			saveBtnDisabled: false  // 保存按钮是否禁用,
 		}
 	},
+	created() {
+		this.init()
+	},
+
 	methods: {
+
 		/**
-		 * @description 添加或更改讲师
+		 * @description 根据ID进行查询对数据进行回显
+		 * @author SxxStar
+		 */
+		init() {
+			//判断路径有id值,做修改
+			if (this.$route.params && this.$route.params.id) {
+				//从路径获取id值
+				const id = this.$route.params.id
+				//调用根据id查询的方法
+				this.getInfo(id)
+			} else { //路径没有id值，做添加
+				//清空表单
+				this.teacher = {}
+			}
+		},
+
+		/**
+		 * @description 判断添加或更改讲师
 		 * @author SxxStar
 		 */
 		saveOrUpdate() {
-			// 添加讲师
-			this.saveTeacher()
+			if (!this.teacher.id) {
+				// 添加
+				this.saveTeacher()
+			} else {
+				// 修改
+				this.updateTeacher()
+			}
 		},
 
 		/**
@@ -70,13 +97,50 @@ export default {
 						message: '讲师添加成功'
 					});
 					// 回到列表页面 路由跳转
-					this.$router.push({path:'/teacher/table'})
+					this.$router.push({ path: '/teacher/table' })
 				})
 				.catch(error => {
 					// 提示信息
 					this.$message.error('讲师添加失败');
 				})
+		},
+
+		/**
+		 * @description 根据讲师ID查询数据
+		 * @author SxxStar
+		 */
+		getInfo(id) {
+			teacherApi.getTeacherInfo(id)
+				.then(response => {
+					this.teacher = response.data.teacher
+				})
+				.catch(error => {
+
+				})
+		},
+
+		/**
+		 * @description 修改讲师
+		 * @author SxxStar
+		 */
+		 updateTeacher() {
+			teacherApi.updateTeacher(this.teacher)
+				// 修改成功
+				.then(response => {
+					// 提示信息
+					this.$message({
+						type: 'success',
+						message: '讲师修改成功'
+					});
+					// 回到列表页面 路由跳转
+					this.$router.push({ path: '/teacher/table' })
+				})
+				.catch(error => {
+					// 提示信息
+					this.$message.error('讲师修改失败');
+				})
 		}
+
 	}
 
 }

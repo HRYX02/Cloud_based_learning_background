@@ -81,8 +81,30 @@ export const constantRoutes = [
 				meta: { title: '编辑讲师', noCache: true },
 				// 在页面上隐藏该导航栏
 				// FIXME:记得生产时候设为true 
-				hidden: false
+				hidden: true
 			}
+		]
+	},
+
+    {
+		path: '/subject',
+		component: Layout,
+		redirect: '/subject/list',
+		name: '课程分类管理',
+		meta: { title: '课程分类管理', icon: 'el-icon-s-help' },
+		children: [
+			{
+				path: 'list',
+				name: '课程分类列表',
+				component: () => import('@/views/edu/subject/list/index'),
+				meta: { title: '课程分类列表', icon: 'table' }
+			},
+			{
+				path: 'save',
+				name: '添加课程分类',
+				component: () => import('@/views/edu/subject/save/index'),
+				meta: { title: '添加课程分类', icon: 'tree' }
+			},
 		]
 	},
 
@@ -185,7 +207,7 @@ export const constantRoutes = [
 		component: Layout,
 		children: [
 			{
-				path: 'https://panjiachen.github.io/vue-element-admin-site/#/',
+				path: 'https://github.com/HRYX02/Cloud_based_learning_vue',
 				meta: { title: 'External Link', icon: 'link' }
 			}
 		]

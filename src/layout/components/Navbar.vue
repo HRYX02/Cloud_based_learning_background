@@ -19,7 +19,7 @@
           <a target="_blank" href="https://github.com/HRYX02/Cloud_based_learning_vue">
             <el-dropdown-item>Github</el-dropdown-item>
           </a>
-          <a target="_blank" href="https://panjiachen.github.io/vue-element-admin-site/#/">
+          <a target="_blank" href="https://github.com/HRYX02/Cloud_based_learning_vue">
             <el-dropdown-item>Docs</el-dropdown-item>
           </a>
           <el-dropdown-item divided @click.native="logout">

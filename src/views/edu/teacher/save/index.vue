@@ -49,7 +49,7 @@
   
 <script>
 import teacherApi from '@/api/edu/teacher/teacher';
-import ImageCropper from '@/components/ImageCropper'
+import ImageCropper from '@/components/ImageCropper';
 import PanThumb from '@/components/PanThumb'
 export default {
     name: 'Save',

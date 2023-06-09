@@ -18,7 +18,7 @@
           :on-error="fileUploadError"
           :disabled="importBtnDisabled"
           :limit="1"
-          :action="'http://localhost:8080'+'/eduservice/edusubject/addSubject'"
+          :action="'http://localhost:8080'+'/eduservice/subject/addSubject'"
           name="multipartFile"
           accept="application/vnd.ms-excel">
           <el-button slot="trigger" size="small" type="primary">选取文件</el-button>

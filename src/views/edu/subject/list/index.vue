@@ -12,7 +12,7 @@
 </template>
   
 <script>
-import subject from '@/api/edu/teacher/subject'
+import subject from '@/api/edu/subject'
 export default {
     name: 'List',
 

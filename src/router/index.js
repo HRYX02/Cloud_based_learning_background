@@ -108,6 +108,49 @@ export const constantRoutes = [
 		]
 	},
 
+    {
+		path: '/course',
+		component: Layout,
+		redirect: '/course/list',
+		name: '课程管理',
+		meta: { title: '课程管理', icon: 'el-icon-s-help' },
+		children: [
+			{
+				path: 'list',
+				name: '课程列表',
+				component: () => import('@/views/edu/course/list/index'),
+				meta: { title: '课程列表', icon: 'table' }
+			},
+			{
+				path: 'info',
+				name: '添加课程',
+				component: () => import('@/views/edu/course/info/index'),
+				meta: { title: '添加课程', icon: 'tree' }
+			},
+			{
+				path: 'info/:id',
+				name: '编辑课程基本信息',
+				component: () => import('@/views/edu/course/info/index'),
+				meta: { title: '编辑课程基本信息', icon: 'tree' },
+                hidden: false
+			},
+			{
+				path: 'chapter/:id',
+				name: '编辑课程大纲',
+				component: () => import('@/views/edu/course/chapter/index'),
+				meta: { title: '编辑课程大纲', icon: 'tree' },
+                hidden: false
+			},
+			{
+				path: 'publish/:id',
+				name: '发布课程',
+				component: () => import('@/views/edu/course/publish/index'),
+				meta: { title: '发布课程', icon: 'tree' },
+                hidden: false 
+			},
+		]
+	},
+
 	{
 		path: '/example',
 		component: Layout,

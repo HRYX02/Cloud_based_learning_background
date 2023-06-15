@@ -132,21 +132,21 @@ export const constantRoutes = [
 				name: '编辑课程基本信息',
 				component: () => import('@/views/edu/course/info/index'),
 				meta: { title: '编辑课程基本信息', icon: 'tree' },
-                hidden: false
+                hidden: true
 			},
 			{
 				path: 'chapter/:id',
 				name: '编辑课程大纲',
 				component: () => import('@/views/edu/course/chapter/index'),
 				meta: { title: '编辑课程大纲', icon: 'tree' },
-                hidden: false
+                hidden: true
 			},
 			{
 				path: 'publish/:id',
 				name: '发布课程',
 				component: () => import('@/views/edu/course/publish/index'),
 				meta: { title: '发布课程', icon: 'tree' },
-                hidden: false 
+                hidden: true 
 			},
 		]
 	},

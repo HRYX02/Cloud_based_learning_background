@@ -23,4 +23,28 @@ export default {
             method: 'get',
         })
     },
+
+    /**
+     * @description 根据课程ID查询课程的基本信息
+     * @author SxxStar
+     */
+    getCourseInfoId(id) {
+        return request({
+            url: `/eduservice/course/getCourseInfo/${id}`,
+            method: 'get',
+        })
+    },
+
+    /**
+     * @description 修改课程信息
+     * @author SxxStar
+     */
+    updateCourseInfo(courseInfo) {
+        return request({
+            url: '/eduservice/course/updateCourseInfo',
+            method: 'post',
+            data: courseInfo,
+        })
+    },
+
 }

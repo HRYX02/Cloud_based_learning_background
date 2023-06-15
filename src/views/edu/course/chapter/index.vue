@@ -28,6 +28,11 @@
                     <li v-for="video in chapter.children" :key="video.id">
                         <p>
                             {{ video.title }}
+                            <span class="acts">
+                                <el-button style="" type="text">编辑</el-button>
+                                <el-button type="text" @click="removeVideo(video.id)">删除</el-button>
+                            </span>
+
                         </p>
                     </li>
                 </ul>
@@ -82,6 +87,7 @@
 
 <script>
 import chapter from '@/api/edu/chapter';
+import video from '@/api/edu/video'
 export default {
     name: 'Chapter',
     data() {
@@ -117,6 +123,61 @@ export default {
     methods: {
 
         /**
+         * @description 删除小节
+         */
+        removeVideo(id) {
+            this.$confirm('此操作将删除小节, 是否继续?', '提示', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type: 'warning'
+            }).then(() => {  //点击确定，执行then方法
+                //调用删除的方法
+                video.deleteVideo(id)
+                    .then(response => {//删除成功
+                        //提示信息
+                        this.$message({
+                            type: 'success',
+                            message: '删除小节成功!'
+                        });
+                        //刷新页面
+                        this.getChapterVideo()
+                    })
+            }) //点击取消，执行catch方法
+        },
+        // 添加小节弹框的方法
+        openVideo(chapterId) {
+            //弹框
+            this.dialogVideoFormVisible = true
+            //设置章节id
+            this.video.chapterId = chapterId
+        },
+        // 添加小节
+        addVideo() {
+            //设置课程id
+            this.video.courseId = this.courseId
+            video.addVideo(this.video)
+                .then(response => {
+                    //关闭弹框
+                    this.dialogVideoFormVisible = false
+                    //提示
+                    this.$message({
+                        type: 'success',
+                        message: '添加小节成功!'
+                    });
+                    //刷新页面
+                    this.getChapterVideo()
+                })
+        },
+        updateVideo() {
+            
+        },
+        saveOrUpdateVideo() {
+            this.addVideo()
+        },
+
+//==============================章节操作====================================
+
+        /**
          * @description 添加章节
          * @author SxxStar
          */
@@ -139,9 +200,9 @@ export default {
                     })
             }).catch(() => {
                 this.$message({
-                            type: 'info',
-                            message: '取消成功!'
-                        });
+                    type: 'info',
+                    message: '取消成功!'
+                });
             }) //点击取消，执行catch方法
         },
 
@@ -153,7 +214,7 @@ export default {
             //弹框
             this.dialogChapterFormVisible = true
             //调用接口
-            chapter.getChapter(chapterId)   
+            chapter.getChapter(chapterId)
                 .then(response => {
                     this.chapter = response.data.chapter
                 })
@@ -167,17 +228,17 @@ export default {
             //设置课程id到chapter对象里面
             this.chapter.courseId = this.courseId
             chapter.addChapter(this.chapter)
-            .then(response => {
-                //关闭弹框
-                this.dialogChapterFormVisible = false
-                //提示
-                this.$message({
-                    type: 'success',
-                    message: '添加章节成功!'
-                });
-                //刷新页面
-                this.getChapterVideo()
-            })
+                .then(response => {
+                    //关闭弹框
+                    this.dialogChapterFormVisible = false
+                    //提示
+                    this.$message({
+                        type: 'success',
+                        message: '添加章节成功!'
+                    });
+                    //刷新页面
+                    this.getChapterVideo()
+                })
         },
         //修改章节的方法
         updateChapter() {

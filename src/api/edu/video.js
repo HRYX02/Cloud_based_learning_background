@@ -24,4 +24,27 @@ export default {
             method: 'delete'
           })
     },
+
+    /**
+     * @description 根据id查询小节
+     * @author SxxStar
+     */
+    getVideo(videoId) {
+        return request({
+            url: `/eduservice/video/getVideoInfo/${videoId}`,
+            method: 'get'
+          })
+    },
+
+    /**
+     * @description 修改章节
+     * @author SxxStar
+     */
+    updateVideo(video) {
+        return request({
+            url: '/eduservice/video/updateVideo',
+            method: 'post',
+            data: video
+          })
+    },
 }

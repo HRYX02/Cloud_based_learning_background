@@ -29,7 +29,7 @@
                         <p>
                             {{ video.title }}
                             <span class="acts">
-                                <el-button style="" type="text">编辑</el-button>
+                                <el-button style="" type="text" @click="openEditVideo(video.id)">编辑</el-button>
                                 <el-button type="text" @click="removeVideo(video.id)">删除</el-button>
                             </span>
 
@@ -146,18 +146,24 @@ export default {
         },
         // 添加小节弹框的方法
         openVideo(chapterId) {
-            //弹框
+            // 弹框
             this.dialogVideoFormVisible = true
-            //设置章节id
+            // 设置章节id
             this.video.chapterId = chapterId
+            // 清空小节弹框
+            this.video.title = ''
+            this.video.sort = 0
+            this.video.free = 0
+            this.video.videoSourceId = ''
+
         },
         // 添加小节
         addVideo() {
-            //设置课程id
+            // 设置课程id
             this.video.courseId = this.courseId
             video.addVideo(this.video)
                 .then(response => {
-                    //关闭弹框
+                    // 关闭弹框
                     this.dialogVideoFormVisible = false
                     //提示
                     this.$message({
@@ -168,11 +174,39 @@ export default {
                     this.getChapterVideo()
                 })
         },
+        /**
+         * @description 修改章节弹框数据回显
+         * @author SxxStar
+         */
+         openEditVideo(videoId) {
+            //弹框
+            this.dialogVideoFormVisible = true
+            //调用接口
+            video.getVideo(videoId)
+                .then(response => {
+                    this.video = response.data.video
+                })
+        },
         updateVideo() {
-            
+            video.updateVideo(this.video)
+                .then(response => {
+                    //关闭弹框
+                    this.dialogVideoFormVisible = false
+                    //提示
+                    this.$message({
+                        type: 'success',
+                        message: '修改章节成功!'
+                    });
+                    //刷新页面
+                    this.getChapterVideo()
+                })
         },
         saveOrUpdateVideo() {
-            this.addVideo()
+            if (!this.video.id) {
+                this.addVideo()
+            } else {
+                this.updateVideo()
+            }
         },
 
 //==============================章节操作====================================

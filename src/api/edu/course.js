@@ -47,4 +47,26 @@ export default {
         })
     },
 
+    /**
+     * @description 课程确认信息显示
+     * @author SxxStar
+     */
+    getPublihCourseInfo(id) {
+        return request({
+            url: `/eduservice/course/getPublishCourseInfo/${id}`,
+            method: 'get'
+          })
+    },
+
+    /**
+     * @description 课程最终发布
+     * @author SxxStar
+     */
+    publishCourse(id) {
+        return request({
+            url: `/eduservice/course/publishCourse/${id}`,
+            method: 'post'
+          })
+    }
+
 }

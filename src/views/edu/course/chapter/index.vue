@@ -68,14 +68,32 @@
                     <el-input-number v-model="video.sort" :min="0" controls-position="right" />
                 </el-form-item>
                 <el-form-item label="是否免费">
-                    <el-radio-group v-model="video.free">
+                    <el-radio-group v-model="video.isFree">
                         <el-radio :label="true">免费</el-radio>
                         <el-radio :label="false">默认</el-radio>
                     </el-radio-group>
                 </el-form-item>
                 <el-form-item label="上传视频">
-                    <!-- TODO -->
+                    <el-upload 
+                        :on-success="handleVodUploadSuccess"
+                        :on-remove="handleVodRemove"
+                        :before-remove="beforeVodRemove"
+                        :on-exceed="handleUploadExceed"
+                        :file-list="fileList"
+                        :action="'http://localhost:8080' + '/eduvod/video/uploadAlYunVideo'"
+                        :limit="1" class="upload-demo">
+                        <el-button size="small" type="primary">上传视频</el-button>
+                        <el-tooltip placement="right-end">
+                            <div slot="content">最大支持1G,<br>
+                                支持3GP、ASF、AVI、DAT、DV、FLV、F4V、<br>
+                                GIF、M2T、M4V、MJ2、MJPEG、MKV、MOV、MP4、<br>
+                                MPE、MPG、MPEG、MTS、OGG、QT、RM、RMVB、<br>
+                                SWF、TS、VOB、WMV、WEBM 等视频格式上传</div>
+                            <i class="el-icon-question" />
+                        </el-tooltip>
+                    </el-upload>
                 </el-form-item>
+
             </el-form>
             <div slot="footer" class="dialog-footer">
                 <el-button @click="dialogVideoFormVisible = false">取 消</el-button>
@@ -102,16 +120,19 @@ export default {
                 sort: 0,
             },
             video: {
+                id:'',
                 title: '',
                 sort: 0,
-                free: 0,
-                videoSourceId: ''
+                isFree: 0,
+                videoSourceId: '',
+                videoOriginalName: '',
             },
 
             //章节弹框
             dialogChapterFormVisible: false,
             //小节弹框
             dialogVideoFormVisible: false,
+            fileList: [],
         };
     },
     created() {
@@ -121,6 +142,38 @@ export default {
         }
     },
     methods: {
+        /**
+         * @description 上传视频成功调用的方法
+         */
+        handleVodUploadSuccess(response, file, fileList) {
+            //上传视频id赋值
+            this.video.videoSourceId = response.data.videoId
+            //上传视频名称赋值
+            this.video.videoOriginalName = file.name
+        },
+
+        /**
+         * @description 上传视频之前调用的方法
+         */
+        handleUploadExceed() {
+            this.$message.warning('想要重新上传视频，请先删除已上传的视频')
+        },
+
+        /**
+         * @description 删除视频之前调用的方法
+         */
+        beforeVodRemove() {
+
+        },
+        
+        /**
+         * @description 删除视频调用的方法
+         */
+        handleVodRemove() {
+
+        },
+
+        //==============================小节操作====================================
 
         /**
          * @description 删除小节
@@ -153,14 +206,19 @@ export default {
             // 清空小节弹框
             this.video.title = ''
             this.video.sort = 0
-            this.video.free = 0
-            this.video.videoSourceId = ''
+            this.video.isFree = 0
+            this.video.id = ''
 
         },
         // 添加小节
         addVideo() {
             // 设置课程id
             this.video.courseId = this.courseId
+            if (this.video.isFree) {
+                this.video.isFree = 1
+            }else {
+                this.video.isFree = 0
+            }
             video.addVideo(this.video)
                 .then(response => {
                     // 关闭弹框
@@ -178,7 +236,7 @@ export default {
          * @description 修改章节弹框数据回显
          * @author SxxStar
          */
-         openEditVideo(videoId) {
+        openEditVideo(videoId) {
             //弹框
             this.dialogVideoFormVisible = true
             //调用接口
@@ -188,6 +246,11 @@ export default {
                 })
         },
         updateVideo() {
+            if (this.video.isFree) {
+                this.video.isFree = 1
+            }else {
+                this.video.isFree = 0
+            }
             video.updateVideo(this.video)
                 .then(response => {
                     //关闭弹框
@@ -200,16 +263,19 @@ export default {
                     //刷新页面
                     this.getChapterVideo()
                 })
+
         },
         saveOrUpdateVideo() {
             if (!this.video.id) {
+                console.log("添加小节");
                 this.addVideo()
             } else {
+                console.log("修改小节");
                 this.updateVideo()
             }
         },
 
-//==============================章节操作====================================
+        //==============================章节操作====================================
 
         /**
          * @description 添加章节

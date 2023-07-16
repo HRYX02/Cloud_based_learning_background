@@ -67,6 +67,27 @@ export default {
             url: `/eduservice/course/publishCourse/${id}`,
             method: 'post'
           })
-    }
+    },
+    /**
+     * @description 查询课程列表
+     * @author SxxStar
+     */
+    getCourseListPage(current, limit, courseQuery) {
+        return request({
+            url: `/eduservice/course/pageCourseCondition/${current}/${limit}`,
+            method: 'post',
+            data: courseQuery,
+        })
+    },
 
+    /**
+     * @description 删除课程
+     * @author SxxStar
+     */
+    deleteCourse(courseId) {
+        return request({
+            url: `/eduservice/course/${courseId}`,
+            method: 'delete',
+        })
+    }
 }

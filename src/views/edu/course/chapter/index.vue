@@ -223,6 +223,9 @@ export default {
             this.video.sort = 0
             this.video.isFree = 0
             this.video.id = ''
+            this.videoSourceId = ''
+            this.videoOriginalName = ''
+            this.fileList = []
 
         },
         // 添加小节

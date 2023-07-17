@@ -47,4 +47,15 @@ export default {
             data: video
           })
     },
+
+    /**
+     * @description 删除视频
+     * @author SxxStar
+     */
+    deleteAlYunVideo(id) {
+        return request({
+            url: `/eduvod/video/removeAlYunVideo/${id}`,
+            method: 'delete',
+        })
+    },
 }

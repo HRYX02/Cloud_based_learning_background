@@ -162,15 +162,30 @@ export default {
         /**
          * @description 删除视频之前调用的方法
          */
-        beforeVodRemove() {
-
+        beforeVodRemove(file,fileList) {
+            return this.$confirm(`确定移除 ${ file.name }？`);
         },
         
         /**
          * @description 删除视频调用的方法
          */
         handleVodRemove() {
-
+            // 调用接口的删除视频的方法
+            video.deleteAlYunVideo(this.video.videoSourceId)
+                .then(response => {
+                    // 提示信息
+                    this.$message({
+                        type: 'success',
+                        message: '删除视频成功!'
+                    });
+                    // 把文件列表清空
+                    this.fileList = []
+                    // 把video视频id和视频名称值清空
+                    // 上传视频id赋值
+                    this.video.videoSourceId = ''
+                    // 上传视频名称赋值
+                    this.video.videoOriginalName = ''
+                })
         },
 
         //==============================小节操作====================================

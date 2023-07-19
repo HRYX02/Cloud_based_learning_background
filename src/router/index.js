@@ -151,6 +151,28 @@ export const constantRoutes = [
 		]
 	},
 
+    {
+		path: '/banner',
+		component: Layout,
+		redirect: '/banner/list',
+		name: '轮播图管理',
+		meta: { title: '轮播图管理', icon: 'el-icon-s-help' },
+		children: [
+			{
+				path: 'list',
+				name: '轮播图列表',
+				component: () => import('@/views/cms/banner/list/index'),
+				meta: { title: '轮播图列表', icon: 'table' }
+			},
+			{
+				path: 'save',
+				name: '添加轮播图',
+				component: () => import('@/views/cms/banner/save/index'),
+				meta: { title: '添加轮播图', icon: 'tree' }
+			},
+		]
+	},
+
 	{
 		path: '/example',
 		component: Layout,

@@ -51,12 +51,11 @@
             </el-form-item>
 
 
-            <!-- 课程封面 TODO -->
             <!-- 课程封面-->
             <el-form-item label="课程封面">
 
                 <el-upload :show-file-list="false" :on-success="handleAvatarSuccess" :before-upload="beforeAvatarUpload"
-                    :action="'http://localhost:8080' + '/eduoss/fileoss'" class="avatar-uploader">
+                    :action="'http://localhost:8080/ossservice/fileoss'" class="avatar-uploader">
                     <img :src="courseInfo.cover">
                 </el-upload>
 

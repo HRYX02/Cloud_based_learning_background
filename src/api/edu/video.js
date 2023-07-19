@@ -54,7 +54,7 @@ export default {
      */
     deleteAlYunVideo(id) {
         return request({
-            url: `/eduvod/video/removeAlYunVideo/${id}`,
+            url: `/vodservice/video/removeAlYunVideo/${id}`,
             method: 'delete',
         })
     },

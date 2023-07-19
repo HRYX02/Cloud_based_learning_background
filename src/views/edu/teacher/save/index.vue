@@ -37,7 +37,7 @@
                     @crop-upload-success：上传成功后的回调
                 -->
                 <image-cropper v-show="imagecropperShow" :width="300" :height="300" :key="imagecropperKey"
-                    :url="'/eduoss/fileoss'" field="file" @close="close" @crop-upload-success="cropSuccess" />
+                    :url="'/ossservice/fileoss'" field="file" @close="close" @crop-upload-success="cropSuccess" />
             </el-form-item>
 
             <el-form-item>

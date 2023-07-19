@@ -80,7 +80,7 @@
                         :before-remove="beforeVodRemove"
                         :on-exceed="handleUploadExceed"
                         :file-list="fileList"
-                        :action="'http://localhost:8080' + '/eduvod/video/uploadAlYunVideo'"
+                        :action="'http://localhost:8080' + '/vodservice/video/uploadAlYunVideo'"
                         :limit="1" class="upload-demo">
                         <el-button size="small" type="primary">上传视频</el-button>
                         <el-tooltip placement="right-end">

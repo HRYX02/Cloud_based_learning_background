@@ -19,13 +19,6 @@
 
                 <el-image :src="banner.imageUrl"></el-image>
 
-                <br>
-
-                <!-- 文件上传按钮 -->
-                <el-button type="primary" icon="el-icon-upload" @click="imagecropperShow = true">
-                    上传轮播图
-                </el-button>
-
                 <!--
                     v-show：是否显示上传组件
                     :key：类似于id，如果一个页面多个图片上传控件，可以做区分
@@ -33,8 +26,12 @@
                     @close：关闭上传组件
                     @crop-upload-success：上传成功后的回调
                 -->
-                <image-cropper v-show="imagecropperShow" :width="300" :height="300" :key="imagecropperKey"
-                    :url="'/ossservice/fileoss'" field="file" @close="close" @crop-upload-success="cropSuccess" />
+
+                <el-upload class="upload-demo" action="http://localhost:8080/ossservice/fileoss"
+                    :on-success="uploadSuccess">
+                    <el-button size="small" type="primary">上传轮播图</el-button>
+                    <div slot="tip" class="el-upload__tip">只能上传jpg/png文件</div>
+                </el-upload>
             </el-form-item>
 
             <el-form-item>
@@ -79,6 +76,9 @@ export default {
     },
 
     methods: {
+        uploadSuccess(image) {
+            this.banner.imageUrl = image.data.url;
+        },
 
         /**
          * @description 根据ID进行查询对数据进行回显
